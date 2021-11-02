@@ -16,4 +16,19 @@ struct __attribute__((packed)) SensorConfigurationPacket {
     uint32_t latency;
 };
 
+struct Sensor {
+    // ID of sensor
+    int ID;
+    // State of sensor first checked
+    bool state;
+    // bool to track if sensor is actually active
+    bool active;
+    // delay in millisecond the inverse of the sample rate
+    // rate (float) needs to be converted
+    unsigned long delay;
+
+    // last saved activation time
+    unsigned long last;
+};
+
 #endif //SENSORTYPES_H

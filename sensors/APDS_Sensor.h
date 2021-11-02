@@ -1,0 +1,24 @@
+//
+// Created by Dylan Ray Roodt on 02.11.2021.
+//
+
+#ifndef APDS_Sensor_H
+#define APDS_Sensor_H
+
+
+class APDS_Sensor {
+public:
+    APDS_Sensor();
+    void start();
+    void end();
+
+    void get_color(int& r, int& g, int& b);
+    int get_light();
+    int get_proximity();
+
+private:
+    bool available = false;
+};
+
+
+#endif //APDS_Sensor_H

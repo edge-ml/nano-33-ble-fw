@@ -2,8 +2,8 @@
 // Created by Dylan Ray Roodt on 31.10.2021.
 //
 
-#ifndef TECO_NICLA_SENSORTEC_H
-#define TECO_NICLA_SENSORTEC_H
+#ifndef SENSORTEC_H
+#define SENSORTEC_H
 
 class Sensortec {
 public:
@@ -24,4 +24,4 @@ private:
 
 extern Sensortec sensortec;
 
-#endif //TECO_NICLA_SENSORTEC_H
+#endif //SENSORTEC_H

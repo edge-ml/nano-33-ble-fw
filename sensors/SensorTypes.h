@@ -2,8 +2,8 @@
 // Created by Dylan Ray Roodt on 31.10.2021.
 //
 
-#ifndef TECO_NICLA_SENSORTYPES_H
-#define TECO_NICLA_SENSORTYPES_H
+#ifndef SENSORTYPES_H
+#define SENSORTYPES_H
 
 struct __attribute__((packed)) SensorConfigurationPacket {
     uint8_t sensorId;
@@ -16,4 +16,4 @@ struct __attribute__((packed)) SensorConfigurationPacket {
     uint32_t latency;
 };
 
-#endif //TECO_NICLA_SENSORTYPES_H
+#endif //SENSORTYPES_H

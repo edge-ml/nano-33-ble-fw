@@ -2,8 +2,8 @@
 // Created by Dylan Ray Roodt on 30.10.2021.
 //
 
-#ifndef TECO_NICLA_BLEHANDLER_H
-#define TECO_NICLA_BLEHANDLER_H
+#ifndef BLEHANDLER_H
+#define BLEHANDLER_H
 
 #include "Arduino.h"
 #include "ArduinoBLE.h"
@@ -28,4 +28,4 @@ private:
 
 extern BLEHandler bleHandler;
 
-#endif //TECO_NICLA_BLEHANDLER_H
+#endif //BLEHANDLER_H

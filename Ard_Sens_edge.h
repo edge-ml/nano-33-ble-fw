@@ -2,8 +2,8 @@
 // Created by Dylan Ray Roodt on 30.10.2021.
 //
 
-#ifndef TECO_NICLA_ARD_SENS_EDGE_H
-#define TECO_NICLA_ARD_SENS_EDGE_H
+#ifndef ARD_SENS_EDGE_H
+#define ARD_SENS_EDGE_H
 
 #include "sensors/SensorTypes.h"
 #include "sensors/SensorID.h"
@@ -26,4 +26,4 @@ private:
 
 extern Ard_Sense_edge Sens;
 
-#endif //TECO_NICLA_ARD_SENS_EDGE_H
+#endif //ARD_SENS_EDGE_H

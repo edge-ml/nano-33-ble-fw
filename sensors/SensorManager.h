@@ -2,8 +2,8 @@
 // Created by Dylan Ray Roodt on 31.10.2021.
 //
 
-#ifndef TECO_NICLA_SENSORMANAGER_H
-#define TECO_NICLA_SENSORMANAGER_H
+#ifndef SENSORMANAGER_H
+#define SENSORMANAGER_H
 
 class SensorManager {
 public:
@@ -19,4 +19,4 @@ private:
 
 extern SensorManager sensorManager;
 
-#endif //TECO_NICLA_SENSORMANAGER_H
+#endif //SENSORMANAGER_H

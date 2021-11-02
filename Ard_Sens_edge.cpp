@@ -32,7 +32,7 @@ void Ard_Sense_edge::delay(unsigned long ms) {
     }
 }
 
-void Arduino_BHY2::debug(Stream &stream)
+void Ard_Sense_edge::debug(Stream &stream)
 {
     _debug = &stream;
     BLEHandler::debug(stream);

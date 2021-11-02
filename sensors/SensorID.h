@@ -38,7 +38,7 @@ Sensors:
  - Microphone
  */
 
-#ifndef TECO_NICLA_SENSORID_H
-#define TECO_NICLA_SENSORID_H
+#ifndef SENSORID_H
+#define SENSORID_H
 
-#endif //TECO_NICLA_SENSORID_H
+#endif //SENSORID_H

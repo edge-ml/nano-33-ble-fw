@@ -12,7 +12,7 @@ SensorManager::start_sensor(int ID) {
     // Start sensor
 }
 
-SensorManager::start_sensor(int ID) {
+SensorManager::end_sensor(int ID) {
     // End sensor
 }
 

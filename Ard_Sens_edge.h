@@ -5,9 +5,8 @@
 #ifndef ARD_SENS_EDGE_H
 #define ARD_SENS_EDGE_H
 
-#include "sensors/SensorTypes.h"
-#include "sensors/SensorID.h"
-#include "sensors/SensorManager.h"
+#include "BLEHandler.h"
+#include "Sensortec.h"
 
 class Ard_Sense_edge {
 public:

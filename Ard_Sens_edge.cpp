@@ -3,8 +3,6 @@
 //
 #include "Ard_Sens_edge.h"
 
-#include "BLEHandler.h"
-
 
 Ard_Sense_edge::Ard_Sense_edge() {
     // Init
@@ -12,10 +10,13 @@ Ard_Sense_edge::Ard_Sense_edge() {
 
 bool Ard_Sense_edge::begin() {
     // Begin sensors
+    sensortec.begin();
 }
 
 void Ard_Sense_edge::update() {
     // Update logic
+    sensortec.update();
+    bleHandler.update();
 }
 
 void Ard_Sense_edge::update(unsigned long ms) {

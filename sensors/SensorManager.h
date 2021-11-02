@@ -9,6 +9,9 @@ class SensorManager {
 public:
     SensorManager();
 
+    start_sensor(int ID);
+    end_sensor(int ID);
+
     // Add additional methods
 
     void debug(Stream &stream);

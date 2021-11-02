@@ -8,6 +8,15 @@ SensorManager::SensorManager() {
 
 }
 
+SensorManager::start_sensor(int ID) {
+    // Start sensor
+}
+
+SensorManager::start_sensor(int ID) {
+    // End sensor
+}
+
+
 void SensorManager::debug(Stream &stream)
 {
     _debug = &stream;

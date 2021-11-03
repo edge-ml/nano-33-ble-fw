@@ -36,7 +36,7 @@ int APDS_Sensor::get_light() {
     return c;
 }
 
-void APDS_Sensor::get_proximity() {
+int APDS_Sensor::get_proximity() {
     if (!available) {
         return;
     }

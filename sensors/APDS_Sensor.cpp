@@ -42,3 +42,10 @@ int APDS_Sensor::get_proximity() {
     }
     return APDS.readProximity();
 }
+
+int APDS_Sensor:: get_gesture() {
+    if (!available) {
+        return;
+    }
+    return APDS.readGesture();
+}

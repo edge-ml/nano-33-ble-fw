@@ -5,6 +5,8 @@
 #ifndef SENSORTYPES_H
 #define SENSORTYPES_H
 
+#include <stdint.h>
+
 const int ModuleActive_BUF = 5;
 
 struct __attribute__((packed)) SensorConfigurationPacket {

@@ -39,7 +39,7 @@ bool BLEHandler::begin() {
     int length;
 
     address.toUpperCase();
-    length = address.length()
+    length = address.length();
 
     name = "BLESense-";
     name += address[length - 5];

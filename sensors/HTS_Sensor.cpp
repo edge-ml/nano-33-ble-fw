@@ -25,6 +25,7 @@ float HTS_Sensor::get_temperature() {
         return;
     }
 
+    // -5 correction from original code
     return HTS.readTemperature()-5;
 }
 

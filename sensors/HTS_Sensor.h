@@ -13,9 +13,12 @@ class HTS_Sensor {
 
     float get_temperature();
     float get_humidity();
+
+    const int sensor_count = 2;
 private:
     bool available = false;
 };
 
+extern HTS_Sensor hts_sensor;
 
 #endif //HTS_SENSOR_H

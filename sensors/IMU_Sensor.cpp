@@ -6,16 +6,21 @@
 #include <Arduino_LSM9DS1.h>
 
 IMU_Sensor::IMU_Sensor() {
-
 }
 
 void IMU_Sensor::start() {
+    if (available) {
+        return;
+    }
     if (IMU.begin()) {
         available = true;
     }
 }
 
 void IMU_Sensor::end() {
+    if (!available) {
+        return;
+    }
     IMU.end()
     available = false;
 }

@@ -15,10 +15,15 @@ public:
     void get_color(int& r, int& g, int& b);
     int get_light();
     int get_proximity();
+    int get_gesture();
+
+    const int sensor_count = 4;
 
 private:
     bool available = false;
 };
+
+extern APDS_Sensor apds_sensor;
 
 
 #endif //APDS_Sensor_H

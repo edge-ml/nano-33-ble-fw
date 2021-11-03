@@ -5,6 +5,8 @@
 #ifndef SENSORTYPES_H
 #define SENSORTYPES_H
 
+const int ModuleActive_BUF = 5;
+
 struct __attribute__((packed)) SensorConfigurationPacket {
     uint8_t sensorId;
     // sample rate is used also to enable/disable the sensor
@@ -29,6 +31,13 @@ struct Sensor {
 
     // last saved activation time
     unsigned long last;
+};
+
+struct ModuleActive {
+    int count;
+    bool active[ModuleActive_BUF];
+    int map[ModuleActive_BUF];
+    int module;
 };
 
 #endif //SENSORTYPES_H

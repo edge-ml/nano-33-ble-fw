@@ -5,6 +5,7 @@
 #include "sensors/SensorTypes.h"
 #include "sensors/SensorID.h"
 #include "sensors/SensorManager.h"
+#include "BLEHandler.h"
 
 #ifndef SENSORTEC_H
 #define SENSORTEC_H
@@ -23,8 +24,10 @@ public:
 
 private:
     Sensor sensors[SENSOR_COUNT];
+    int ID_type_assignment[SENSOR_COUNT];
 
     Stream *_debug;
+    void init_ID_type_assignment();
     void update_sensor(Sensor sens);
     void send_sensor_data(int ID);
 };

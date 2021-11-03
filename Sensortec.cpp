@@ -5,7 +5,7 @@
 #include "Sensortec.h"
 
 Sensortec::Sensortec() {
-
+    init_ID_type_assignment();
 }
 
 bool Sensortec::begin() {
@@ -56,6 +56,31 @@ void Sensortec::update_sensor(Sensor sens) {
 void Sensortec::send_sensor_data(int ID) {
     // Get data from SensorManager
     // Send data via BLE
+    int type = ID_type_assignment[ID];
+
+    int *int_data;
+    int *float_data;
+
+    if (type == TYPE_INT) {
+        int_data = sensorManager.get_int_data(ID);
+        bleHandler.send(int_data);
+    } else if (tpye == TYPE_FLOAT) {
+        float_data = sensorManager.get_float_data(ID);
+        bleHandler.send(float_data);
+    }
+}
+
+void Sensortec::init_ID_type_assignment() {
+    int ID;
+    for (int i=0; i < INT_TYPE_COUNT; i++) {
+        ID = RETURN_TYPE_INT[i];
+        ID_type_assignment[ID] = TYPE_INT;
+    }
+
+    for (int i=0; i < FLOAT_TYPE_COUNT; i++) {
+        ID = RETURN_TYPE_FLOAT[i];
+        ID_type_assignment[ID] = TYPE_FLOAT;
+    }
 }
 
 void Sensortec::debug(Stream &stream) {

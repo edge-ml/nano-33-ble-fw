@@ -14,6 +14,9 @@ public:
     bool begin();
     void update();
 
+    void send(int *data);
+    void send(float *data);
+
     void poll(unsigned long timeout);
     void end();
 

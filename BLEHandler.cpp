@@ -77,6 +77,16 @@ void BLEHandler::update() {
     // Other stuff check data available etc.
 }
 
+void BLEHandler::send(int *data) {
+    // send list of int data as in int16 2 bytes each
+    // first element is length of array
+}
+
+void BLEHandler::send(float *data) {
+    // send list of float data floats 4 bytes each
+    // first element is length of array (just convert to int)
+}
+
 void BLEHandler::poll(unsigned long timeout) {
     BLE.poll(timeout);
 }

@@ -4,6 +4,8 @@
 
 #include "Sensortec.h"
 
+#include "sensors/SensorID.h"
+
 Sensortec::Sensortec() {
     init_ID_type_assignment();
 }
@@ -13,7 +15,7 @@ bool Sensortec::begin() {
     for (int i=0; i<SENSOR_COUNT; i++) {
         sens = sensors[i];
 
-        sens.ID = ID;
+        sens.ID = IMU_ACCELERATION;
         sens.state = false;
         sens.active = false;
         sens.delay = 0;
@@ -23,12 +25,13 @@ bool Sensortec::begin() {
 }
 
 void Sensortec::update() {
+    Sensor sens;
     for (int i=0; i<SENSOR_COUNT; i++) {
         sens = sensors[i];
         if (sens.state) {
             update_sensor(sens);
         } else if (sens.active) {
-            sensorManager.end_sensor(ID);
+            sensorManager.end_sensor(sens.ID);
             sens.active = false;
         }
     }
@@ -42,7 +45,7 @@ void Sensortec::configureSensor(SensorConfigurationPacket& config) {
 
 void Sensortec::update_sensor(Sensor sens) {
     if (!sens.active) {
-        sensorManager.start_sensor(ID);
+        sensorManager.start_sensor(sens.ID);
         sens.active = true;
     }
 

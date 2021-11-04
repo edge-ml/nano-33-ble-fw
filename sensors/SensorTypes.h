@@ -9,6 +9,8 @@
 
 const int ModuleActive_BUF = 5;
 
+#define SENSOR_DATA_FIXED_LENGTH (10)
+
 struct __attribute__((packed)) SensorConfigurationPacket {
     uint8_t sensorId;
     // sample rate is used also to enable/disable the sensor
@@ -24,7 +26,7 @@ struct __attribute__((packed)) SensorDataPacket {
   uint8_t sensorId;
   uint8_t size;
   uint8_t data[SENSOR_DATA_FIXED_LENGTH];
-}
+};
 
 struct Sensor {
     // ID of sensor

@@ -20,6 +20,12 @@ struct __attribute__((packed)) SensorConfigurationPacket {
     uint32_t latency;
 };
 
+struct __attribute__((packed)) SensorDataPacket {
+  uint8_t sensorId;
+  uint8_t size;
+  uint8_t data[SENSOR_DATA_FIXED_LENGTH];
+}
+
 struct Sensor {
     // ID of sensor
     int ID;

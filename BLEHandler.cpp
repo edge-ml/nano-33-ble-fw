@@ -4,6 +4,20 @@
 
 #include "BLEHandler.h"
 
+#include "Arduino.h"
+#include "ArduinoBLE.h"
+
+#include "sensors/SensorTypes.h"
+
+#include "Sensortec.h"
+
+// Sensor Data channels
+BLEService sensorService("34c2e3bb-34aa-11eb-adc1-0242ac120002"); 
+auto sensorDataUuid = "34c2e3bc-34aa-11eb-adc1-0242ac120002";
+auto sensorConfigUuid = "34c2e3bd-34aa-11eb-adc1-0242ac120002";
+BLECharacteristic sensorDataCharacteristic(sensorDataUuid, (BLERead | BLENotify), sizeof(SensorDataPacket));
+BLECharacteristic sensorConfigCharacteristic(sensorConfigUuid, BLEWrite, sizeof(SensorConfigurationPacket));
+
 Stream* BLEHandler::_debug = NULL;
 
 BLEHandler::BLEHandler() {
@@ -58,11 +72,16 @@ bool BLEHandler::begin() {
         _debug->println(name);
     }
 
-    // Other code for begin
+  // Sensor channel
+  BLE.setAdvertisedService(sensorService);
+  sensorService.addCharacteristic(sensorConfigCharacteristic);
+  sensorService.addCharacteristic(sensorDataCharacteristic);
+  BLE.addService(sensorService);
+  sensorConfigCharacteristic.setEventHandler(BLEWritten, receivedSensorConfig);
 
-
-
-    return true;
+  //
+  BLE.advertise();
+  return true;
 }
 
 void BLEHandler::end() {
@@ -71,10 +90,22 @@ void BLEHandler::end() {
 }
 
 void BLEHandler::update() {
-    BLE.poll();
+  BLE.poll();
 
+  // This check doesn't work with more than one client at the same time
+  if (sensorDataCharacteristic.subscribed()) {
 
-    // Other stuff check data available etc.
+    // Simulate a request for reading new sensor data
+    uint8_t availableData = sensortec.availableSensorData(); // <- TODO: Die Funktion existiert noch nicht!
+    while (availableData) {
+      SensorDataPacket data;
+      sensortec.readSensorData(data); // <- TODO: Die Funktion existiert noch nicht!
+      sensorDataCharacteristic.writeValue(&data, sizeof(SensorDataPacket));
+      --availableData;
+    }
+
+  }
+
 }
 
 void BLEHandler::send(int *data) {

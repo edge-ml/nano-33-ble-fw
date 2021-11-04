@@ -122,7 +122,7 @@ void BLEHandler::poll(unsigned long timeout) {
     BLE.poll(timeout);
 }
 
-void BLEHandler::debug(int &stream) {
+void BLEHandler::debug(Stream &stream) {
     _debug = &stream;
     BLE.debug(stream);
 }

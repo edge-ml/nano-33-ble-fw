@@ -5,6 +5,8 @@
 #ifndef SENSORMANAGER_H
 #define SENSORMANAGER_H
 
+#include "Arduino.h"
+
 #include "SensorTypes.h"
 #include "APDS_Sensor.h"
 #include "BARO_Sensor.h"

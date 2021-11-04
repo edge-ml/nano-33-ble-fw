@@ -41,8 +41,10 @@ void BLEHandler::receivedSensorConfig(BLEDevice central, BLECharacteristic chara
     sensortec.configureSensor(data);
 }
 
-bool BLEHandler::begin() {
+bool BLEHandler::begin() {    
+    Serial.println("BLEHandler::begin()");
     if (!BLE.begin()) {
+        Serial.println("BLE.begin() failed!");
         return false;
     }
     bleActive = true;
@@ -96,10 +98,14 @@ void BLEHandler::update() {
   if (sensorDataCharacteristic.subscribed()) {
 
     // Simulate a request for reading new sensor data
-    uint8_t availableData = sensortec.availableSensorData(); // <- TODO: Die Funktion existiert noch nicht!
+    uint8_t availableData = 1;//sensortec.availableSensorData(); // <- TODO: Die Funktion existiert noch nicht!
     while (availableData) {
       SensorDataPacket data;
-      sensortec.readSensorData(data); // <- TODO: Die Funktion existiert noch nicht!
+      data.sensorId = 2;
+      data.size = 2;
+      data.data[0] = 100;
+      data.data[1] = 55;
+      //sensortec.readSensorData(data); // <- TODO: Die Funktion existiert noch nicht!
       sensorDataCharacteristic.writeValue(&data, sizeof(SensorDataPacket));
       --availableData;
     }
@@ -126,3 +132,5 @@ void BLEHandler::debug(Stream &stream) {
     _debug = &stream;
     BLE.debug(stream);
 }
+
+BLEHandler bleHandler;

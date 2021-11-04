@@ -9,8 +9,11 @@ Ard_Sense_edge::Ard_Sense_edge() {
 }
 
 bool Ard_Sense_edge::begin() {
+    Serial.println("Ard_Sense_edge::begin()");
     // Begin sensors
+    bleHandler.begin();
     sensortec.begin();
+    return true;
 }
 
 void Ard_Sense_edge::update() {
@@ -35,6 +38,10 @@ void Ard_Sense_edge::delay(unsigned long ms) {
 
 void Ard_Sense_edge::debug(Stream &stream)
 {
+  
+    Serial.println("Ard_Sense_edge::debug()");
     _debug = &stream;
     BLEHandler::debug(stream);
 }
+
+Ard_Sense_edge Sens;

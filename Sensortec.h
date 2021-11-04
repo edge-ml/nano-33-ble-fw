@@ -4,7 +4,6 @@
 
 #include "sensors/SensorTypes.h"
 #include "sensors/SensorID.h"
-#include "sensors/SensorManager.h"
 #include "BLEHandler.h"
 
 #ifndef SENSORTEC_H

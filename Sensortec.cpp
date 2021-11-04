@@ -4,7 +4,7 @@
 
 #include "Sensortec.h"
 
-#include "sensors/SensorID.h"
+#include "sensors/SensorManager.h"
 
 Sensortec::Sensortec() {
     init_ID_type_assignment();
@@ -24,6 +24,7 @@ bool Sensortec::begin() {
     return true;
 }
 
+
 void Sensortec::update() {
     Sensor sens;
     for (int i=0; i<SENSOR_COUNT; i++) {
@@ -31,7 +32,7 @@ void Sensortec::update() {
         if (sens.state) {
             update_sensor(sens);
         } else if (sens.active) {
-            sensorManager.end_sensor(sens.ID);
+            //sensorManager.end_sensor(sens.ID);
             sens.active = false;
         }
     }
@@ -45,7 +46,7 @@ void Sensortec::configureSensor(SensorConfigurationPacket& config) {
 
 void Sensortec::update_sensor(Sensor sens) {
     if (!sens.active) {
-        sensorManager.start_sensor(sens.ID);
+        //sensorManager.start_sensor(sens.ID);
         sens.active = true;
     }
 
@@ -62,13 +63,13 @@ void Sensortec::send_sensor_data(int ID) {
     int type = ID_type_assignment[ID];
 
     int *int_data;
-    int *float_data;
+    float *float_data;
 
     if (type == TYPE_INT) {
-        int_data = sensorManager.get_int_data(ID);
+        int_data = new int[4]{1,2,3,4}; // sensorManager.get_int_data(ID);
         bleHandler.send(int_data);
-    } else if (tpye == TYPE_FLOAT) {
-        float_data = sensorManager.get_float_data(ID);
+    } else if (type == TYPE_FLOAT) {
+        float_data = new float[4]{1.0, 2.0, 3.0, 4.0}; // sensorManager.get_float_data(ID);
         bleHandler.send(float_data);
     }
 }
@@ -89,3 +90,5 @@ void Sensortec::init_ID_type_assignment() {
 void Sensortec::debug(Stream &stream) {
     _debug = &stream;
 }
+
+Sensortec sensortec;

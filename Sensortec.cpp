@@ -19,7 +19,7 @@ bool Sensortec::begin() {
         sens.delay = 0;
         sens.last = -1;
     }
-    return True;
+    return true;
 }
 
 void Sensortec::update() {

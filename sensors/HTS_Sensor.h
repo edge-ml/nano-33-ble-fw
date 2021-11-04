@@ -7,7 +7,7 @@
 
 
 class HTS_Sensor {
-    APDS_Sensor();
+    HTS_Sensor();
     void start();
     void end();
 

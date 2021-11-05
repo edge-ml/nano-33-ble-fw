@@ -1,6 +1,7 @@
 //
 // Created by Dylan Ray Roodt on 30.10.2021.
 //
+#include "Arduino.h"
 
 /*
 Sensors:
@@ -40,6 +41,8 @@ Sensors:
 
 #ifndef SENSORID_H
 #define SENSORID_H
+
+const String BLE_NAME_PREFIX = "NANO";
 
 const int IMU_ACCELERATION = 0;
 const int IMU_GYROSCOPE = 1;

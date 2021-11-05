@@ -54,7 +54,7 @@ bool BLEHandler::begin() {
     address.toUpperCase();
     length = address.length();
 
-    name = "BLESense-";
+    name = BLE_NAME_PREFIX + "-";
     name += address[length - 5];
     name += address[length - 4];
     name += address[length - 2];

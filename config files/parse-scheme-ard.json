@@ -1,0 +1,45 @@
+{
+  "types": 
+  [
+
+    {
+      "id": 0,
+      "type": "xyz",
+      "parse-scheme": 
+      [
+        {"name": "val", "type": "float", "scale-factor": 1},
+        {"name": "val", "type": "float", "scale-factor": 1},
+        {"name": "val", "type": "float", "scale-factor": 1}
+      ]
+    },
+
+    {
+      "id": 1,
+      "type": "single_float",
+      "parse-scheme":
+      [
+        {"name": "val", "type": "float", "scale-factor": 1}
+      ]
+    },
+
+    {
+      "id": 2,
+      "type": "color",
+      "parse-scheme":
+      [
+        {"name": "val", "type": "int16", "scale-factor": 1},
+        {"name": "val", "type": "int16", "scale-factor": 1},
+        {"name": "val", "type": "int16", "scale-factor": 1}
+      ]
+    },
+
+    {
+      "id": 3,
+      "type": "single_int",
+      "parse-scheme":
+      [
+        {"name": "val", "type": "int16", "scale-factor": 1}
+      ]
+    }
+  ]
+}

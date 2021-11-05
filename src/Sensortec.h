@@ -27,7 +27,7 @@ private:
 
     Stream *_debug;
     void init_ID_type_assignment();
-    void update_sensor(Sensor sens);
+    void update_sensor(Sensor &sens);
     void send_sensor_data(int ID);
 };
 

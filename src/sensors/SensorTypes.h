@@ -5,11 +5,11 @@
 #ifndef SENSORTYPES_H
 #define SENSORTYPES_H
 
-#include <stdint.h>
+#include <cstdint>
 
 const int ModuleActive_BUF = 5;
 
-#define SENSOR_DATA_FIXED_LENGTH (10)
+#define SENSOR_DATA_FIXED_LENGTH (12)
 
 struct __attribute__((packed)) SensorConfigurationPacket {
     uint8_t sensorId;
@@ -26,6 +26,11 @@ struct __attribute__((packed)) SensorDataPacket {
   uint8_t sensorId;
   uint8_t size;
   uint8_t data[SENSOR_DATA_FIXED_LENGTH];
+};
+
+struct PacketElement {
+    bool ready;
+    SensorConfigurationPacket data;
 };
 
 struct Sensor {

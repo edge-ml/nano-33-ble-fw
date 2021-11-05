@@ -7,6 +7,9 @@
 
 #include "Arduino.h"
 #include "ArduinoBLE.h"
+#include "sensors/SensorTypes.h"
+
+const int BUFFER_SIZE = 5;
 
 class BLEHandler {
 public:
@@ -14,8 +17,8 @@ public:
     bool begin();
     void update();
 
-    void send(int *data);
-    void send(float *data);
+    void send(int ID, int *data);
+    void send(int ID, float *data);
 
     void poll(unsigned long timeout);
     void end();
@@ -26,7 +29,9 @@ public:
 
 private:
     static Stream *_debug;
-    static void receivedSensorConfig(BLEDevice central, BLECharacteristic characteristic);
+    void static receivedSensorConfig(BLEDevice central, BLECharacteristic characteristic);
+    void write_int16_at_pos(int16_t value, uint8_t *data, int pos);
+    void write_float_at_pos(float value, uint8_t *data, int pos);
 };
 
 extern BLEHandler bleHandler;

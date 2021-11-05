@@ -23,7 +23,5 @@ private:
     bool available = false;
 };
 
-extern APDS_Sensor apds_sensor;
-
 
 #endif //APDS_Sensor_H

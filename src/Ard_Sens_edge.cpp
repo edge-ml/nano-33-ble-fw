@@ -3,16 +3,18 @@
 //
 #include "Ard_Sens_edge.h"
 
-
 Ard_Sense_edge::Ard_Sense_edge() {
     // Init
 }
 
 bool Ard_Sense_edge::begin() {
-    Serial.println("Ard_Sense_edge::begin()");
+    if (_debug) _debug->println("Begin Ard_Sense");
+
     // Begin sensors
     bleHandler.begin();
     sensortec.begin();
+
+    if (_debug) _debug->println("End Begin \n");
     return true;
 }
 
@@ -38,10 +40,11 @@ void Ard_Sense_edge::delay(unsigned long ms) {
 
 void Ard_Sense_edge::debug(Stream &stream)
 {
-  
-    Serial.println("Ard_Sense_edge::debug()");
     _debug = &stream;
-    BLEHandler::debug(stream);
+    bleHandler.debug(stream);
+    sensortec.debug(stream);
+
+    _debug->println("Debugger Active");
 }
 
 Ard_Sense_edge Sens;

@@ -4,14 +4,19 @@
 
 #include "SensorManager.h"
 
+IMU_Sensor imu_sensor;
+HTS_Sensor hts_sensor;
+BARO_Sensor baro_sensor;
+APDS_Sensor apds_sensor;
+
 
 SensorManager::SensorManager() {
-    ModuleActive act;
+    ModuleActive act{};
     for (int i=0; i < MODULE_COUNT_PHYSICAL; i++) {
         act = active[i];
 
         for (int u=0; u < ModuleActive_BUF; u++) {
-            act.active = false;
+            act.active[u] = false;
         }
 
         act.module = i;
@@ -48,6 +53,10 @@ SensorManager::SensorManager() {
 
 void SensorManager::start_sensor(int ID) {
     // Start sensor
+    if (_debug) {
+        _debug->print("Starting Sensor: ");
+        _debug->println(ID);
+    }
     int pos = sensor_module_pos[ID];
     int module = module_assignment[ID];
 
@@ -187,7 +196,7 @@ void SensorManager::end_sensor(int ID) {
 }
 
 int * SensorManager::get_int_data(int ID) {
-    int data[4];
+    int* data = new int[4];
 
     switch(ID) {
         case APDS_COLOUR : {
@@ -217,13 +226,14 @@ int * SensorManager::get_int_data(int ID) {
     }
     return data;
 }
+
 float * SensorManager::get_float_data(int ID){
-    float data[4];
+    float* data = new float[4];
 
     switch(ID) {
         case IMU_ACCELERATION : {
             data[0] = 3;
-            int x,y,z;
+            float x,y,z;
             imu_sensor.get_acc(x,y,z);
             data[1] = x;
             data[2] = y;
@@ -232,7 +242,7 @@ float * SensorManager::get_float_data(int ID){
         }
         case IMU_GYROSCOPE : {
             data[0] = 3;
-            int x,y,z;
+            float x,y,z;
             imu_sensor.get_gyro(x,y,z);
             data[1] = x;
             data[2] = y;
@@ -241,7 +251,7 @@ float * SensorManager::get_float_data(int ID){
         }
         case IMU_MAGNET : {
             data[0] = 3;
-            int x,y,z;
+            float x,y,z;
             imu_sensor.get_mag(x,y,z);
             data[1] = x;
             data[2] = y;
@@ -260,7 +270,7 @@ float * SensorManager::get_float_data(int ID){
         }
         case BARO_PRESS : {
             data[0] = 1;
-            data[1] = baro_sensor.get_humidity();
+            data[1] = baro_sensor.get_pressure();
             break;
         }
     }
@@ -280,7 +290,7 @@ void SensorManager::init_assignment(const int ID, int MODULE) {
 }
 
 void SensorManager::init_sensor_module_pos(int length, const int *MAP) {
-    for (int i=0; i<length, i++) {
+    for (int i=0; i<length; i++) {
         sensor_module_pos[MAP[i]] = i;
     }
 }

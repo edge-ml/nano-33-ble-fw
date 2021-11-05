@@ -5,7 +5,7 @@
 #include "HTS_Sensor.h"
 #include <Arduino_HTS221.h>
 
-void HTS_Sensor::HTS_Sensor() {
+HTS_Sensor::HTS_Sensor() {
 
 }
 
@@ -16,13 +16,13 @@ void HTS_Sensor::start() {
 }
 
 void HTS_Sensor::end() {
-    HTS.end()
+    HTS.end();
     available = false;
 }
 
 float HTS_Sensor::get_temperature() {
     if (!available) {
-        return;
+        return 0.0;
     }
 
     // -5 correction from original code
@@ -31,7 +31,7 @@ float HTS_Sensor::get_temperature() {
 
 float HTS_Sensor::get_humidity(){
     if (!available) {
-        return;
+        return 0.0;
     }
 
     return HTS.readHumidity();

@@ -19,6 +19,4 @@ private:
     bool available = false;
 };
 
-extern BARO_Sensor baro_sensor;
-
 #endif //BARO_SENSOR_H

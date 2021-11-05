@@ -8,6 +8,7 @@
 #include "Arduino.h"
 
 #include "SensorTypes.h"
+#include "SensorID.h"
 #include "APDS_Sensor.h"
 #include "BARO_Sensor.h"
 #include "HTS_Sensor.h"
@@ -28,10 +29,10 @@ public:
     void debug(Stream &stream);
 
 private:
-    Stream *_debug;
-    ModuleActive active[MODULE_COUNT_PHYSICAL];
-    int module_assignment[SENSOR_COUNT];
-    int sensor_module_pos[SENSOR_COUNT];
+    Stream *_debug{};
+    ModuleActive active[MODULE_COUNT_PHYSICAL]{};
+    int module_assignment[SENSOR_COUNT]{};
+    int sensor_module_pos[SENSOR_COUNT]{};
 
     void init_act_map(ModuleActive& act, const int *MAP);
     void init_assignment(const int ID, int MODULE);
@@ -40,7 +41,5 @@ private:
     void deactivate_pos(int module, int pos);
     bool all_inactive(int module, int pos);
 };
-
-extern SensorManager sensorManager;
 
 #endif //SENSORMANAGER_H

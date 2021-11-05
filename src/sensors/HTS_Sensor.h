@@ -7,6 +7,7 @@
 
 
 class HTS_Sensor {
+public:
     HTS_Sensor();
     void start();
     void end();
@@ -18,7 +19,5 @@ class HTS_Sensor {
 private:
     bool available = false;
 };
-
-extern HTS_Sensor hts_sensor;
 
 #endif //HTS_SENSOR_H

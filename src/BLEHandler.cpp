@@ -6,22 +6,19 @@
 
 #include "Arduino.h"
 #include "ArduinoBLE.h"
-
-#include "sensors/SensorTypes.h"
-
 #include "Sensortec.h"
+#include <cstdint>
 
 // Sensor Data channels
-BLEService sensorService("34c2e3bb-34aa-11eb-adc1-0242ac120002"); 
+BLEService sensorService("34c2e3bb-34aa-11eb-adc1-0242ac120002");
 auto sensorDataUuid = "34c2e3bc-34aa-11eb-adc1-0242ac120002";
 auto sensorConfigUuid = "34c2e3bd-34aa-11eb-adc1-0242ac120002";
 BLECharacteristic sensorDataCharacteristic(sensorDataUuid, (BLERead | BLENotify), sizeof(SensorDataPacket));
 BLECharacteristic sensorConfigCharacteristic(sensorConfigUuid, BLEWrite, sizeof(SensorConfigurationPacket));
 
-Stream* BLEHandler::_debug = NULL;
+Stream* BLEHandler::_debug = nullptr;
 
 BLEHandler::BLEHandler() {
-
 }
 
 // Sensor channel
@@ -37,14 +34,14 @@ void BLEHandler::receivedSensorConfig(BLEDevice central, BLECharacteristic chara
         _debug->println(data.latency);
     }
 
-
     sensortec.configureSensor(data);
 }
 
-bool BLEHandler::begin() {    
-    Serial.println("BLEHandler::begin()");
+
+bool BLEHandler::begin() {
     if (!BLE.begin()) {
-        Serial.println("BLE.begin() failed!");
+        if (_debug) _debug->println("BLE already active");
+
         return false;
     }
     bleActive = true;
@@ -74,63 +71,83 @@ bool BLEHandler::begin() {
         _debug->println(name);
     }
 
-  // Sensor channel
-  BLE.setAdvertisedService(sensorService);
-  sensorService.addCharacteristic(sensorConfigCharacteristic);
-  sensorService.addCharacteristic(sensorDataCharacteristic);
-  BLE.addService(sensorService);
-  sensorConfigCharacteristic.setEventHandler(BLEWritten, receivedSensorConfig);
+    // Sensor channel
+    BLE.setAdvertisedService(sensorService);
+    sensorService.addCharacteristic(sensorConfigCharacteristic);
+    sensorService.addCharacteristic(sensorDataCharacteristic);
+    BLE.addService(sensorService);
+    sensorConfigCharacteristic.setEventHandler(BLEWritten, receivedSensorConfig);
 
-  //
-  BLE.advertise();
-  return true;
+    //
+    BLE.advertise();
+    return true;
 }
 
 void BLEHandler::end() {
+    if (_debug) _debug->println("BLE End");
     bleActive = false;
     BLE.end();
 }
 
 void BLEHandler::update() {
-  BLE.poll();
-
-  // This check doesn't work with more than one client at the same time
-  if (sensorDataCharacteristic.subscribed()) {
-
-    // Simulate a request for reading new sensor data
-    uint8_t availableData = 1;//sensortec.availableSensorData(); // <- TODO: Die Funktion existiert noch nicht!
-    while (availableData) {
-      SensorDataPacket data;
-      data.sensorId = 2;
-      data.size = 2;
-      data.data[0] = 100;
-      data.data[1] = 55;
-      //sensortec.readSensorData(data); // <- TODO: Die Funktion existiert noch nicht!
-      sensorDataCharacteristic.writeValue(&data, sizeof(SensorDataPacket));
-      --availableData;
-    }
-
-  }
-
+    BLE.poll();
 }
 
-void BLEHandler::send(int *data) {
+void BLEHandler::send(int ID, int *data) {
     // send list of int data as in int16 2 bytes each
     // first element is length of array
+    if (sensorDataCharacteristic.subscribed()) {
+        SensorDataPacket package{};
+        int16_t value;
+        int length = data[0];
+        package.sensorId = ID;
+        package.size = 2 + length * 2;
+
+        for (int i=0; i<length; i++) {
+            value = (int16_t)data[i + 1];
+            write_int16_at_pos(value, package.data, i * 2);
+        }
+
+        sensorDataCharacteristic.writeValue(&package, sizeof(SensorDataPacket));
+    }
 }
 
-void BLEHandler::send(float *data) {
+void BLEHandler::send(int ID, float *data) {
     // send list of float data floats 4 bytes each
     // first element is length of array (just convert to int)
+    if (sensorDataCharacteristic.subscribed()) {
+        SensorDataPacket package{};
+        int length = (int)data[0];
+        package.sensorId = ID;
+        package.size = 2 + length * 4;
+
+        for (int i=0; i<length; i++) {
+            write_float_at_pos(data[i + 1], package.data, i * 4);
+        }
+
+        sensorDataCharacteristic.writeValue(&package, sizeof(SensorDataPacket));
+    }
 }
 
 void BLEHandler::poll(unsigned long timeout) {
     BLE.poll(timeout);
 }
 
+void BLEHandler::write_int16_at_pos(int16_t value, uint8_t *data, int pos) {
+    data[pos] = value & 0x000000ff;
+    data[pos+1] = (value & 0x0000ff00) >> 8;
+}
+
+void BLEHandler::write_float_at_pos(float value, uint8_t *data, int pos) {
+    int length = sizeof(float);
+    for(int i = 0; i < length; i++){
+        data[pos+i] = ((uint8_t*)&value)[i];
+    }
+}
+
 void BLEHandler::debug(Stream &stream) {
     _debug = &stream;
-    BLE.debug(stream);
+    //BLE.debug(stream); // Problems with Debug
 }
 
 BLEHandler bleHandler;

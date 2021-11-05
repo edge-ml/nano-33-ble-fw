@@ -21,6 +21,4 @@ private:
     bool available = false;
 };
 
-extern IMU_Sensor imu_sensor;
-
 #endif //IMU_SENSOR_H

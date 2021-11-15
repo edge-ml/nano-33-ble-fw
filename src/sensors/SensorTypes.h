@@ -25,6 +25,7 @@ struct __attribute__((packed)) SensorConfigurationPacket {
 struct __attribute__((packed)) SensorDataPacket {
   uint8_t sensorId;
   uint8_t size;
+  uint32_t millis;
   uint8_t data[SENSOR_DATA_FIXED_LENGTH];
 };
 

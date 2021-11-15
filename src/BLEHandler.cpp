@@ -9,12 +9,22 @@
 #include "Sensortec.h"
 #include <cstdint>
 
+const char* deviceIdentifier = "NANO";
+const char* deviceGeneration = "1.0.0";
+
 // Sensor Data channels
 BLEService sensorService("34c2e3bb-34aa-11eb-adc1-0242ac120002");
 auto sensorDataUuid = "34c2e3bc-34aa-11eb-adc1-0242ac120002";
 auto sensorConfigUuid = "34c2e3bd-34aa-11eb-adc1-0242ac120002";
 BLECharacteristic sensorDataCharacteristic(sensorDataUuid, (BLERead | BLENotify), sizeof(SensorDataPacket));
 BLECharacteristic sensorConfigCharacteristic(sensorConfigUuid, BLEWrite, sizeof(SensorConfigurationPacket));
+
+// Device information channels
+BLEService deviceInfoService("45622510-6468-465a-b141-0b9b0f96b468");
+auto deviceIdentifierUuid = "45622511-6468-465a-b141-0b9b0f96b468";
+auto deviceGenerationUuid = "45622512-6468-465a-b141-0b9b0f96b468";
+BLECharacteristic deviceIdentifierCharacteristic(deviceIdentifierUuid, BLERead, sizeof(deviceIdentifier) + 1);
+BLECharacteristic deviceGenerationCharacteristic(deviceGenerationUuid, BLERead, sizeof(deviceGeneration) + 1);
 
 Stream* BLEHandler::_debug = nullptr;
 
@@ -54,7 +64,7 @@ bool BLEHandler::begin() {
     address.toUpperCase();
     length = address.length();
 
-    name = BLE_NAME_PREFIX + "-";
+    name = (String)deviceIdentifier + "-";
     name += address[length - 5];
     name += address[length - 4];
     name += address[length - 2];
@@ -77,6 +87,14 @@ bool BLEHandler::begin() {
     sensorService.addCharacteristic(sensorDataCharacteristic);
     BLE.addService(sensorService);
     sensorConfigCharacteristic.setEventHandler(BLEWritten, receivedSensorConfig);
+
+    // Device information
+    BLE.setAdvertisedService(deviceInfoService);
+    deviceInfoService.addCharacteristic(deviceIdentifierCharacteristic);
+    deviceInfoService.addCharacteristic(deviceGenerationCharacteristic);
+    BLE.addService(deviceInfoService);
+    deviceIdentifierCharacteristic.writeValue(deviceIdentifier);
+    deviceGenerationCharacteristic.writeValue(deviceGeneration);
 
     //
     BLE.advertise();
@@ -101,7 +119,8 @@ void BLEHandler::send(int ID, int *data) {
         int16_t value;
         int length = data[0];
         package.sensorId = ID;
-        package.size = 2 + length * 2;
+        package.size = 2 + 4 + length * 2;
+        package.millis = millis();
 
         for (int i=0; i<length; i++) {
             value = (int16_t)data[i + 1];
@@ -120,6 +139,7 @@ void BLEHandler::send(int ID, float *data) {
         int length = (int)data[0];
         package.sensorId = ID;
         package.size = 2 + length * 4;
+        package.millis = millis();
 
         for (int i=0; i<length; i++) {
             write_float_at_pos(data[i + 1], package.data, i * 4);

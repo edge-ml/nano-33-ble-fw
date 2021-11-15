@@ -42,8 +42,6 @@ Sensors:
 #ifndef SENSORID_H
 #define SENSORID_H
 
-const String BLE_NAME_PREFIX = "NANO";
-
 const int IMU_ACCELERATION = 0;
 const int IMU_GYROSCOPE = 1;
 const int IMU_MAGNET = 2;

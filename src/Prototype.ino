@@ -13,7 +13,7 @@ void setup() {
 
     Sens.begin();
 }
-int i = 0;
+
 void loop() {
     // Update and then sleep
     Sens.update(100);

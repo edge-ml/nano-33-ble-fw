@@ -46,19 +46,20 @@ int APDS_Sensor::get_light() {
 
 int APDS_Sensor::get_proximity() {
     if (!available) {
-        return 0;
+        return -1;
     }
-    while (! APDS.colorAvailable()) {
+    while (! APDS.proximityAvailable()) {
         delay(2);
     }
     return APDS.readProximity();
 }
 
+// Warning if gesture is turned on then it will wait for a gesture!!!
 int APDS_Sensor:: get_gesture() {
     if (!available) {
-        return 0;
+        return -1;
     }
-    while (! APDS.colorAvailable()) {
+    while (! APDS.gestureAvailable()) {
         delay(2);
     }
 

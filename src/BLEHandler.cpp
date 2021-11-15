@@ -138,7 +138,7 @@ void BLEHandler::send(int ID, float *data) {
         SensorDataPacket package{};
         int length = (int)data[0];
         package.sensorId = ID;
-        package.size = 2 + length * 4;
+        package.size = 2 + 4 + length * 4;
         package.millis = millis();
 
         for (int i=0; i<length; i++) {

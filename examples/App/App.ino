@@ -1,7 +1,7 @@
 #include "Ard_Sens_edge.h"
 
 // Set DEBUG to true in order to enable debug print
-#define DEBUG true
+#define DEBUG false
 
 void setup() {
 
@@ -16,5 +16,5 @@ void setup() {
 int i = 0;
 void loop() {
     // Update and then sleep
-    Sens.update(100);
+    Sens.update();
 }

@@ -1,4 +1,8 @@
+**⚠️⚠️ WE RECOMMEND YOU INSTALL THE UNIFIED EDGE-ML ARDUINO LIBRARY FOLLOWING THE INSTRUCTIONS [HERE](https://github.com/edge-ml/EdgeML-Arduino)⚠️⚠️**
+
 # nano-33-ble-fw
+
+
 
 Firmware to use with the Arduino Nano 33 BLE to record sensor data with edge-ml over Web Bluetooth.
 
